@@ -53,7 +53,7 @@ python3 script.py
 ```
 
 ## View the results
-Go to the directory and open the file to see incoming messages (By default, it's in "skype_messages/messages.txt")
+Go to the directory and open the file to see incoming messages (By default, it's in "skype_messages/{the_interlocutors_username}_messages.txt")
 
 # Conclusion
 Meow.
