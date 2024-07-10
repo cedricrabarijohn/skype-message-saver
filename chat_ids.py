@@ -9,16 +9,5 @@ skype_password = os.getenv("SKYPE_PASSWORD")
 
 sk = Skype(skype_mail, skype_password)
 
-for chat_id in sk.chats.recent():
-    chat = sk.chats.chat(chat_id)
-    
-    try:
-        if isinstance(chat, SkypeChat) and chat.userId:
-            username = chat.userId
-            try:
-                username = sk.contacts[username].name
-            except:
-                username = 'Unknown'
-            print(f"Chat ID: {chat_id} | Username: {username}")
-    except:
-        ''
+for contact in sk.contacts:
+    print(f"Chat ID : {contact.chat.id} | Username : {contact.name}")
