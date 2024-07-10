@@ -13,23 +13,26 @@ chat_id = os.getenv("CHAT_ID")
 env_output_dir = os.getenv("OUTPUT_DIR")
 env_output_file = os.getenv("OUTPUT_FILE")
 
+
+output_dir = "skype_messages"
+output_file = "messages.txt"
+if env_output_dir:
+    output_dir = env_output_dir
+if env_output_file:
+    output_file = env_output_file
+    
 sk = Skype(skype_mail, skype_password)
 print(sk)
 if not chat_id:
     print("CHAT_ID is empty")
 else:
     print(f"Your script is now running ... (Press Ctrl + C to stop it anytime)")
+    print(f"Newest messages will be logged in {output_dir}/{output_file}")
     if chat_id:
         chat = sk.chats[chat_id]
         print(f"Waiting for sent or incoming messages from {chat.user.name}")
 
     while True and chat_id:
-        output_dir = "skype_messages"
-        output_file = "messages.txt"
-        if env_output_dir:
-            output_dir = env_output_dir
-        if env_output_file:
-            output_file = env_output_file
         os.makedirs(output_dir, exist_ok=True)
         output_file = os.path.join(output_dir, output_file)
         messages = chat.getMsgs()
@@ -61,5 +64,5 @@ else:
 
                     with open(output_file, "w") as f:
                         f.write(new_message + "\n\n==============================================================\n\n" + existing_content)
-                        print(f"{current_time} - New message appended to {output_file}")
+                        print(f"{current_time} - New message appended to {output_dir}/{output_file}")
         time.sleep(2)
