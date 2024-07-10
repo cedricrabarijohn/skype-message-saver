@@ -19,10 +19,11 @@ if not chat_id:
     print("CHAT_ID is empty")
 else:
     print(f"Your script is now running ... (Press Ctrl + C to stop it anytime)")
-    print(f"Waiting for sent or incoming messages ...")
-    while True and chat_id:
+    if chat_id:
         chat = sk.chats[chat_id]
+        print(f"Waiting for sent or incoming messages from {chat.user.name}")
 
+    while True and chat_id:
         output_dir = "skype_messages"
         output_file = "messages.txt"
         if env_output_dir:
@@ -50,7 +51,7 @@ else:
                     message_content = last_message.content
                     if message_content == '':
                         message_content = '[has deleted a message]'
-                    new_message = f"{sender_name} - [{last_message_time.strftime('%Y-%m-%d %H:%M:%S')}]\n>>\n\n{format_skype_message(message_content)}"
+                    new_message = f"-----------------------------------------\n{sender_name} - [{last_message_time.strftime('%Y-%m-%d %H:%M:%S')}]\n-----------------------------------------\n\n{format_skype_message(message_content)}"
 
                     if os.path.exists(output_file):
                         with open(output_file, "r") as f:
