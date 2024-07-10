@@ -63,6 +63,6 @@ else:
                         existing_content = ""
 
                     with open(output_file, "w") as f:
-                        f.write(new_message + "\n\n==============================================================\n\n" + existing_content)
+                        f.write(new_message + "\n\n============================================================================================================================\n\n" + existing_content)
                         print(f"{current_time} - New message appended to {output_dir}/{output_file}")
-        time.sleep(2)
+        time.sleep(1)
