@@ -1,7 +1,7 @@
 # SKYPE MESSAGE SAVER
 
 ## Intro
-This project aims to save messages logs from a skype account into a text file in your computer
+This project aims to save message logs from a Skype account's chats into a specified file on your computer.
 
 > Nb : In my case, I'm using "python3" alias to run the python scripts, so feel free to use any existing alias in your current OS like "py" or "py3".
 
