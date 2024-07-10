@@ -3,7 +3,7 @@ from skpy import Skype
 import time
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
-from utils import format_skype_message, escape_newlines
+from utils import format_skype_message, escape_newlines, to_snake_case
 
 load_dotenv()
 
@@ -15,27 +15,26 @@ env_output_file = os.getenv("OUTPUT_FILE")
 
 
 output_dir = "skype_messages"
-output_file = "messages.txt"
-if env_output_dir:
-    output_dir = env_output_dir
-if env_output_file:
-    output_file = env_output_file
-    
+
 sk = Skype(skype_mail, skype_password)
 print(sk)
 if not chat_id:
     print("CHAT_ID is empty")
 else:
     print(f"Your script is now running ... (Press Ctrl + C to stop it anytime)")
-    print(f"Newest messages will be logged in {output_dir}/{output_file}")
+    print(f"Newest messages will be logged in {output_dir} folder")
     if chat_id:
         chat = sk.chats[chat_id]
         print(f"Waiting for sent or incoming messages from {chat.user.name}")
-
     while True and chat_id:
         os.makedirs(output_dir, exist_ok=True)
-        output_file = os.path.join(output_dir, output_file)
         messages = chat.getMsgs()
+        output_file = "messages.txt"
+        if env_output_dir:
+            output_dir = env_output_dir
+        if env_output_file:
+            output_file = env_output_file
+
         if messages:
             last_message = messages[0]
             sender = sk.contacts[last_message.userId]
@@ -55,7 +54,8 @@ else:
                     if message_content == '':
                         message_content = '[has deleted a message]'
                     new_message = f"-----------------------------------------\n{sender_name} - [{last_message_time.strftime('%Y-%m-%d %H:%M:%S')}]\n-----------------------------------------\n\n{format_skype_message(message_content)}"
-
+                    output_file = os.path.join(output_dir,f"{to_snake_case(str(chat.user.name))}_{output_file}")
+                    
                     if os.path.exists(output_file):
                         with open(output_file, "r") as f:
                             existing_content = f.read()
